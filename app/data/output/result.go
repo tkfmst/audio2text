@@ -54,8 +54,10 @@ func (sr *SearchedResult) String() string {
 		return ""
 	} else {
 		return fmt.Sprintf(
-			"[pos: %d, keyword: %s] %s",
+			"[pos: %d, start: %s, end: %s, keyword: %s] %s",
 			sr.val.Pos(),
+			sr.val.GetStart(),
+			sr.val.GetEnd(),
 			ss[sr.val.TargetIdx()],
 			ws,
 		)

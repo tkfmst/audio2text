@@ -36,18 +36,36 @@ func TestMain(t *testing.T) {
 	mockWord12 := mock_entity.NewMockWord(c)
 	mockWordEOT := mock_entity.NewMockWord(c)
 
+	d1s, _ := time.ParseDuration("1s")
+	d2s, _ := time.ParseDuration("2s")
+	d3s, _ := time.ParseDuration("3s")
+	d4s, _ := time.ParseDuration("4s")
+	d5s, _ := time.ParseDuration("5s")
+	d6s, _ := time.ParseDuration("6s")
+
+	mockWord1.EXPECT().String().Return("1abい").AnyTimes()
+	mockWord1.EXPECT().StartTime().Return(d1s).AnyTimes()
+	mockWord1.EXPECT().EndTime().Return(d2s).AnyTimes()
+
 	mockWord1.EXPECT().String().Return("1abい").AnyTimes()
 	mockWord2.EXPECT().String().Return("2cdろ").AnyTimes()
 	mockWord3.EXPECT().String().Return("3efは").AnyTimes()
 	mockWord4.EXPECT().String().Return("4ghに").AnyTimes()
 	mockWord5.EXPECT().String().Return("5ijほ").AnyTimes()
+
 	mockWord6.EXPECT().String().Return("6klへ").AnyTimes()
+	mockWord6.EXPECT().StartTime().Return(d3s).AnyTimes()
+	mockWord6.EXPECT().EndTime().Return(d4s).AnyTimes()
+
 	mockWord7.EXPECT().String().Return("7mnと").AnyTimes()
 	mockWord8.EXPECT().String().Return("8opち").AnyTimes()
 	mockWord9.EXPECT().String().Return("9qrり").AnyTimes()
 	mockWord10.EXPECT().String().Return("10stぬ").AnyTimes()
 	mockWord11.EXPECT().String().Return("11uvる").AnyTimes()
+
 	mockWord12.EXPECT().String().Return("12wxを").AnyTimes()
+	mockWord12.EXPECT().StartTime().Return(d5s).AnyTimes()
+	mockWord12.EXPECT().EndTime().Return(d6s).AnyTimes()
 
 	// mockText.ReadWordのみで使う
 	mockWordEOT.EXPECT().String().Return("").AnyTimes()
@@ -108,9 +126,9 @@ func TestMain(t *testing.T) {
 	}()
 
 	result := make([]string, 0, 20)
-	expected0 := "[pos: 1, keyword: 1abい] 1abい 2cdろ 3efは 4ghに 5ijほ 6klへ"
-	expected1 := "[pos: 6, keyword: 6klへ] 1abい 2cdろ 3efは 4ghに 5ijほ 6klへ 7mnと 8opち 9qrり 10stぬ 11uvる"
-	expected2 := "[pos: 12, keyword: 12wxを] 7mnと 8opち 9qrり 10stぬ 11uvる 12wxを"
+	expected0 := "[pos: 1, start: 1s, end: 2s, keyword: 1abい] 1abい 2cdろ 3efは 4ghに 5ijほ 6klへ"
+	expected1 := "[pos: 6, start: 3s, end: 4s, keyword: 6klへ] 1abい 2cdろ 3efは 4ghに 5ijほ 6klへ 7mnと 8opち 9qrり 10stぬ 11uvる"
+	expected2 := "[pos: 12, start: 5s, end: 6s, keyword: 12wxを] 7mnと 8opち 9qrり 10stぬ 11uvる 12wxを"
 
 	for {
 		select {

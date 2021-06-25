@@ -34,3 +34,11 @@ func (s *Searched) TargetIdx() int {
 func (s *Searched) Pos() int {
 	return s.pos
 }
+
+func (s *Searched) GetStart() string {
+	return s.words[s.targetIdx].StartTime().String()
+}
+
+func (s *Searched) GetEnd() string {
+	return s.words[s.targetIdx].EndTime().String()
+}
