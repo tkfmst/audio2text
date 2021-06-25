@@ -3,14 +3,14 @@ package main
 import (
 	"log"
 
-	"example.com/audio2text/adapter"
-	"example.com/audio2text/adapter/input/cmd"
-	"example.com/audio2text/adapter/presenter"
-	interactor "example.com/audio2text/app/interactor/gcp"
-	"example.com/audio2text/app/service"
-	"example.com/audio2text/entity/enum"
-	converter_gcp "example.com/audio2text/infra/api/converter/gcp"
-	"example.com/audio2text/infra/io"
+	"example.com/audio2text/internal/adapter"
+	"example.com/audio2text/internal/adapter/input/cmd"
+	"example.com/audio2text/internal/adapter/presenter"
+	interactor "example.com/audio2text/internal/app/interactor/gcp"
+	"example.com/audio2text/internal/app/service"
+	"example.com/audio2text/internal/entity/enum"
+	converter_gcp "example.com/audio2text/internal/infra/api/converter/gcp"
+	"example.com/audio2text/internal/infra/io"
 )
 
 func main() {
