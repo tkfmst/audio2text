@@ -76,7 +76,7 @@ func (a2t Audio2Text) FromFile(f *input.File) {
 			logger.Debug(word, ok)
 			if !ok { // text EOT
 				for _, searched := range a2t.search.Finalize() {
-					a2t.presenter.Write(output.NewSearchedResult(&searched))
+					a2t.presenter.OutputStdOut(output.NewSearchedResult(&searched))
 				}
 				logger.Debug("Search.Run&Finalize finished")
 				break
@@ -85,7 +85,7 @@ func (a2t Audio2Text) FromFile(f *input.File) {
 			searched, ok := a2t.search.Run(word)
 			logger.Debug("searched:", searched, ok)
 			if ok {
-				a2t.presenter.Write(output.NewSearchedResult(searched))
+				a2t.presenter.OutputStdOut(output.NewSearchedResult(searched))
 			}
 		}
 	}

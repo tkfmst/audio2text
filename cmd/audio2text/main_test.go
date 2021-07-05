@@ -9,7 +9,7 @@ import (
 
 	"example.com/audio2text/internal/adapter"
 	"example.com/audio2text/internal/adapter/presenter"
-	interactor "example.com/audio2text/internal/app/interactor/gcp"
+	interactor "example.com/audio2text/internal/app/interactor"
 	"example.com/audio2text/internal/app/service"
 	"example.com/audio2text/internal/gomock/mock_api"
 	"example.com/audio2text/internal/gomock/mock_entity"
