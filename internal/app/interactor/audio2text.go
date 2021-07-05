@@ -59,9 +59,7 @@ func (a2t Audio2Text) FromFile(f *input.File) {
 	}()
 
 	// Response api & Search keyword
-	i := 1
 	for {
-		i = i + 1
 		text, err := a2t.converter.Recv(audio.ID())
 		if err == io.EOF {
 			logger.Debug("Converter.Recv finished")
