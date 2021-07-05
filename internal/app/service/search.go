@@ -6,8 +6,8 @@ import (
 )
 
 const (
-	// Idx of the result word
-	searchedTargetIdx = 5
+// Idx of the result word
+// searchedTargetIdx = 5
 )
 
 type Search interface {
@@ -16,38 +16,43 @@ type Search interface {
 }
 
 // pos: overall position
-type SearchWith5WordsBeforeAndAfter struct {
-	result   []entity.Word
-	keywords []string
-	pos      int
+type SearchWithWordsBeforeAndAfter struct {
+	result                 []entity.Word
+	keywords               []string
+	pos                    int
+	searchedTargetIdx      int
+	beforAndAfterWordCount int
 }
 
-func NewSearchWith5WordsBeforeAndAfter(keywords []string) Search {
-	s := new(SearchWith5WordsBeforeAndAfter)
-	// 最初から11にしておいてshiftしてもエラーにならないように
-	s.result = make([]entity.Word, 11)
+func NewSearchWithWordsBeforeAndAfter(keywords []string, beforAndAfterWordCount int) Search {
+
+	s := new(SearchWithWordsBeforeAndAfter)
+	// 最初から前後単語数+検索ワードにしておいてshiftしてもエラーにならないように
+	s.result = make([]entity.Word, beforAndAfterWordCount*2+1)
 	s.keywords = keywords
 	s.pos = 0
+	s.searchedTargetIdx = beforAndAfterWordCount
+	s.beforAndAfterWordCount = beforAndAfterWordCount
 
 	return s
 }
 
-func (s *SearchWith5WordsBeforeAndAfter) Run(word entity.Word) (*entity.Searched, bool) {
+func (s *SearchWithWordsBeforeAndAfter) Run(word entity.Word) (*entity.Searched, bool) {
 	s.pos += 1
 	_ = s.popAndPush(word)
 
-	target := s.result[searchedTargetIdx]
+	target := s.result[s.searchedTargetIdx]
 
 	if len(s.result) == 11 && target != nil && slicestring.Contains(s.keywords, target.String()) {
-		return entity.NewSearched(s.result, searchedTargetIdx, s.pos-searchedTargetIdx), true
+		return entity.NewSearched(s.result, s.searchedTargetIdx, s.pos-s.searchedTargetIdx), true
 	}
 	return nil, false
 }
 
-// Finalize searches for SearchWith5WordsBeforeAndAfter.result[6:]
-func (s *SearchWith5WordsBeforeAndAfter) Finalize() []entity.Searched {
-	result := make([]entity.Searched, searchedTargetIdx)
-	for i := 0; i < searchedTargetIdx; i++ {
+// Finalize searches for SearchWithWordsBeforeAndAfter.result[6:]
+func (s *SearchWithWordsBeforeAndAfter) Finalize() []entity.Searched {
+	result := make([]entity.Searched, s.searchedTargetIdx)
+	for i := 0; i < s.searchedTargetIdx; i++ {
 		r, ok := s.Run(nil)
 		if ok {
 			result = append(result, *r)
@@ -56,7 +61,7 @@ func (s *SearchWith5WordsBeforeAndAfter) Finalize() []entity.Searched {
 	return result
 }
 
-func (s *SearchWith5WordsBeforeAndAfter) popAndPush(word entity.Word) entity.Word {
+func (s *SearchWithWordsBeforeAndAfter) popAndPush(word entity.Word) entity.Word {
 	w := s.result[0]
 	s.result = append(s.result[1:], word)
 	return w

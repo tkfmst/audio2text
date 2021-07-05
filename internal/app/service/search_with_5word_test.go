@@ -1,5 +1,6 @@
 package service
 
+// TODO 前後単語数を汎用にしたテストにする
 import (
 	"testing"
 
@@ -49,7 +50,7 @@ func TestRun(t *testing.T) {
 	// mockWord11.EXPECT().String().Return("vw")
 
 	keywords := []string{"ab", "mn", "vw"}
-	search := NewSearchWith5WordsBeforeAndAfter(keywords)
+	search := NewSearchWithWordsBeforeAndAfter(keywords, 5)
 
 	s1, ok1 := search.Run(mockWord1)
 	if s1 != nil && !ok1 {

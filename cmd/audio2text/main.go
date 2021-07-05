@@ -20,6 +20,9 @@ func main() {
 		log.Fatalf("%+v", err)
 	}
 
+	// 仕様: 検索単語前後の単語数
+	const searchBeforAndAfterWordCount = 5
+
 	// 入力
 	args, err := cmd.NewArgs()
 	if err != nil {
@@ -31,7 +34,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("%+v", err)
 	}
-	search := service.NewSearchWith5WordsBeforeAndAfter(args.Keywords)
+	search := service.NewSearchWithWordsBeforeAndAfter(args.Keywords, searchBeforAndAfterWordCount)
 	pr := presenter.NewResultPresenter(io.NewStdOut())
 
 	usecase := interactor.NewAudio2Text(converter, search, pr)

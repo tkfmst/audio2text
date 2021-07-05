@@ -112,7 +112,7 @@ func TestMain(t *testing.T) {
 	// create usecase
 	keywords := []string{"1abい", "6klへ", "12wxを"}
 	converter := mockConverter
-	search := service.NewSearchWith5WordsBeforeAndAfter(keywords)
+	search := service.NewSearchWithWordsBeforeAndAfter(keywords, 5)
 	pr := presenter.NewResultPresenter(mockIO)
 
 	usecase := interactor.NewAudio2Text(converter, search, pr)
